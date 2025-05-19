@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown to 10 PM</title>
+  <style>
+    body {
+      text-align: center;
+      padding: 50px;
+      color: #564138;
+      font-family: "Times New Roman", serif;
+      line-height: 1.6;
+      background: url(wallpaperAncientGreece.jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin: 0;
+    }
+
+    #countdown, #odd-day-countdown {
+      font-size: 42px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      border: 3px solid #564138;
+      padding: 20px;
+      background-color: #f2e8d7;
+      color: #564138;
+      border-radius: 30px;
+      backdrop-filter: blur(4px) brightness(1.08);
+      box-shadow: 0 2px 18px 2px #56413833;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 10px;
+      background: #eee;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 30px;
+      margin-top: -10px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #a6764f;
+      width: 0%;
+      transition: width 1s;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+      font-size: 24px;
+      border-bottom: 1px solid #564138;
+      padding: 10px;
+      background: #f7f3ec;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    button {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #a6764f;
+      color: #f6f1e9;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      box-shadow: 0 1px 3px #0001;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background-color: #7c573b;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 30px;
+      border: 3px solid #564138;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(4px) brightness(1.08);
+      box-shadow: 0 2px 18px 2px #56413833;
+    }
+
+    h1,h2 {
+      font-size: 43px;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 30px;
+      text-shadow: 0 3px 8px #fff8, 0 1px 0 #a6764f;
+    }
+    h2 {
+      font-size: 30px;
+    }
+
+    .task-input {
+      display: flex;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+
+    .task-input input {
+      flex: 1;
+      padding: 10px;
+      font-size: 18px;
+      border: 2px solid #a6764f;
+      border-radius: 5px;
+      margin-right: 0;
+    }
+
+    .task-input button {
+      padding: 10px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #a6764f;
+      color: #f6f1e9;
+      border: none;
+      border-radius: 5px;
+      margin-left: 0;
+      cursor: pointer;
+    }
+
+    .export-btn {
+      margin-left: 10px;
+      background-color: #638073;
+      color: #fff;
+      font-size: 16px;
+      padding: 8px 18px;
+    }
+
+    .delete-btn {
+      margin-left: 16px;
+      background-color: #a85959;
+      color: #fff;
+      font-size: 15px;
+      padding: 8px 12px;
+      border-radius: 5px;
+    }
+
+    #book-quote {
+      margin: 20px auto 10px auto;
+      font-style: italic;
+      font-size: 22px;
+      color: #564138;
+      background: #fff8;
+      border-radius: 12px;
+      padding: 18px 18px 8px 18px;
+      max-width: 700px;
+      box-shadow: 0 2px 18px 2px #56413815;
+      min-height: 44px;
+    }
+
+    .refresh-verse-btn {
+      margin-top: 5px;
+      background-color: #638073;
+      color: #fff;
+      font-size: 16px;
+      padding: 8px 18px;
+      border-radius: 6px;
+    }
+
+    @media only screen and (max-width: 600px) {
+      body {
+        font-size: 15px;
+        background-size: cover;
+        padding: 10px;
+      }
+      .container, #countdown, #odd-day-countdown {
+        max-width: 97%;
+        margin: 10px auto;
+        font-size: 90%;
+      }
+      h1, h2 {
+        font-size: 23px;
+        margin-bottom: 14px;
+      }
+      .task-input {
+        flex-direction: column;
+        gap: 0;
+      }
+      .task-input input, .task-input button {
+        width: 100%;
+        margin-bottom: 6px;
+      }
+      li {
+        font-size: 18px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      #book-quote {
+        font-size: 16px;
+        padding: 10px 8px 6px 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Digital Count Down To 10PM</h1>
+  <div id="countdown"></div>
+  <div class="progress-bar-container">
+    <div id="countdown-bar" class="progress-bar"></div>
+  </div>
+  <br><br><br>
+
+
+  <br><br>
+
+  <!-- Motivational Quote Section -->
+  <div id="book-quote"></div>
+<button onclick="getBookQuote()" class="refresh-verse-btn" style="margin-bottom:20px;">Show Another Quote</button>
+
+  <br><br>
+
+  <div class="container">
+    <h1>To-Do List</h1>
+    <div class="task-input">
+        <input type="text" id="task" placeholder="Enter your task here">
+        <input type="time" id="task-start-time">
+        <input type="time" id="task-end-time">
+        <button onclick="addTask()">Add Task</button>
+    </div>
+    <ul id="task-list"></ul>
+    <button onclick="deleteAll()" class="delete-btn">Delete All Tasks</button>
+    <button onclick="exportTasks()" class="export-btn">Export Tasks as CSV</button>
+  </div>
+
+
+<script src="script.js">
+
+</script>
+
+
+</body>
+</html>
