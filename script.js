@@ -42,10 +42,20 @@
   // ---- DAILY QUOTE FROM API ----
 async function getBookQuote() {
     try {
-        const response = await fetch('https://poetrydb.org/random');
-        const data = await response.json();
-        const poem = data[0];
-        // Join all lines of the poem with <br> for line breaks
+        let poem;
+        let attempts = 0;
+        // Try up to 20 times to get a short poem
+        while (attempts < 20) {
+            const response = await fetch('https://poetrydb.org/random');
+            const data = await response.json();
+            poem = data[0];
+            if (poem.lines.length <= 15) break; // Got a short poem!
+            attempts++;
+        }
+        if (poem.lines.length > 15) {
+            document.getElementById('book-quote').innerText = "Couldn't find a short poem right now.";
+            return;
+        }
         const poemText = poem.lines.join("<br>");
         document.getElementById('book-quote').innerHTML =
             `${poemText}<br><br><b>— ${poem.title} by ${poem.author}</b>`;
@@ -54,6 +64,7 @@ async function getBookQuote() {
     }
 }
 window.addEventListener('DOMContentLoaded', getBookQuote);
+
 
 
 
