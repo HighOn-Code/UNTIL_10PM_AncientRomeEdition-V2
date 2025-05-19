@@ -42,14 +42,13 @@
   // ---- DAILY QUOTE FROM API ----
 async function getBookQuote() {
     try {
-        const proxy = "https://corsproxy.io/?";
-        const url = "https://en.wikipedia.org/api/rest_v1/page/random/summary";
-        const response = await fetch(proxy + encodeURIComponent(url));
+        const response = await fetch('https://poetrydb.org/random');
         const data = await response.json();
+        const poem = data[0];
         document.getElementById('book-quote').innerHTML =
-            `"${data.extract}" <br><b>— Wikipedia: <a href='${data.content_urls.desktop.page}' target='_blank'>${data.title}</a></b>`;
+            `"${poem.lines[0]}..." <br><b>— ${poem.title} by ${poem.author}</b>`;
     } catch (e) {
-        document.getElementById('book-quote').innerText = "Couldn't fetch excerpt right now.";
+        document.getElementById('book-quote').innerText = "Couldn't fetch a poem right now.";
     }
 }
 window.addEventListener('DOMContentLoaded', getBookQuote);
