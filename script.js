@@ -41,100 +41,20 @@
 
   // ---- DAILY QUOTE FROM API ----
 async function getBookQuote() {
-    const apis = [
-        {
-            name: 'ZenQuotes',
-            url: 'https://zenquotes.io/api/random',
-            parse: (data) => {
-                if (Array.isArray(data) && data[0] && data[0].q) {
-                    return `"${data[0].q}" <br><b>— ${data[0].a}</b>`;
-                }
-                return null;
-            }
-        },
-        {
-            name: 'FavQs',
-            url: 'https://favqs.com/api/qotd',
-            parse: (data) => {
-                if (data && data.quote && data.quote.body) {
-                    return `"${data.quote.body}" <br><b>— ${data.quote.author}</b>`;
-                }
-                return null;
-            }
-        },
-        {
-            name: 'Quotable',
-            url: 'https://api.quotable.io/random',
-            parse: (data) => {
-                if (data && data.content && data.author) {
-                    return `"${data.content}" <br><b>— ${data.author}</b>`;
-                }
-                return null;
-            }
-        },
-        {
-            name: 'Type.fit',
-            url: 'https://type.fit/api/quotes',
-            parse: (data) => {
-                // This API returns an array; pick a random quote
-                if (Array.isArray(data) && data.length > 0) {
-                    const quote = data[Math.floor(Math.random() * data.length)];
-                    if (quote.text) {
-                        return `"${quote.text}" <br><b>— ${quote.author || 'Unknown'}</b>`;
-                    }
-                }
-                return null;
-            }
-        },
-        {
-            name: 'Programming Quotes',
-            url: 'https://programming-quotes-api.vercel.app/api/random',
-            parse: (data) => {
-                if (data && data.en && data.author) {
-                    return `"${data.en}" <br><b>— ${data.author}</b>`;
-                }
-                return null;
-            }
-        },
-        {
-            name: 'Bible',
-            url: 'https://labs.bible.org/api/?passage=random&type=json',
-            parse: (data) => {
-                if (Array.isArray(data) && data[0] && data[0].text) {
-                    return `"${data[0].text.trim()}" <br><b>${data[0].bookname} ${data[0].chapter}:${data[0].verse}</b>`;
-                }
-                return null;
-            }
-        }
-    ];
-
-    let quoteShown = false;
-    for (let api of apis) {
-        try {
-            // Some APIs require special handling for JSON arrays
-            const response = await fetch(api.url);
-            let data;
-            if (api.name === 'Type.fit') {
-                data = await response.json();
-            } else {
-                data = await response.json();
-            }
-            const quoteHTML = api.parse(data);
-            if (quoteHTML) {
-                document.getElementById('book-quote').innerHTML = quoteHTML;
-                quoteShown = true;
-                break;
-            }
-        } catch (e) {
-            // Try next API
-        }
-    }
-    if (!quoteShown) {
-        document.getElementById('book-quote').innerText = "Couldn't fetch quote right now.";
+    try {
+        const proxy = "https://corsproxy.io/?";
+        const url = "https://en.wikipedia.org/api/rest_v1/page/random/summary";
+        const response = await fetch(proxy + encodeURIComponent(url));
+        const data = await response.json();
+        document.getElementById('book-quote').innerHTML =
+            `"${data.extract}" <br><b>— Wikipedia: <a href='${data.content_urls.desktop.page}' target='_blank'>${data.title}</a></b>`;
+    } catch (e) {
+        document.getElementById('book-quote').innerText = "Couldn't fetch excerpt right now.";
     }
 }
-
 window.addEventListener('DOMContentLoaded', getBookQuote);
+
+
 
 
 
