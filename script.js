@@ -45,13 +45,16 @@ async function getBookQuote() {
         const response = await fetch('https://poetrydb.org/random');
         const data = await response.json();
         const poem = data[0];
+        // Join all lines of the poem with <br> for line breaks
+        const poemText = poem.lines.join("<br>");
         document.getElementById('book-quote').innerHTML =
-            `"${poem.lines[0]}..." <br><b>— ${poem.title} by ${poem.author}</b>`;
+            `${poemText}<br><br><b>— ${poem.title} by ${poem.author}</b>`;
     } catch (e) {
         document.getElementById('book-quote').innerText = "Couldn't fetch a poem right now.";
     }
 }
 window.addEventListener('DOMContentLoaded', getBookQuote);
+
 
 
 
