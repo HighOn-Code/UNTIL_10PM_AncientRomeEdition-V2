@@ -42,7 +42,7 @@
   // ---- DAILY QUOTE FROM API ----
   async function getBookQuote() {
     try {
-        const response = await fetch('https://api.quotable.io/random');
+        const response = await fetch('https://favqs.com/api/qotd');
         const data = await response.json();
         document.getElementById('book-quote').innerHTML =
             `"${data.content}"<br><b>${data.author}${data.source ? ' – ' + data.source : ''}</b>`;
